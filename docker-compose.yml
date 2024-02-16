@@ -1,0 +1,10 @@
+version:"1.1"
+
+service:
+  app:
+    container_name: admin-smilee-c
+    image: admin-smilee-i
+    build:
+      context: .
+    ports:
+      - 2601:2601
