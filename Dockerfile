@@ -5,7 +5,7 @@ FROM node:14-alpine
 RUN npm install -g serve
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /app/build
 
 # Copy the build directory from the previous stage
 COPY --from=build /app/build ./build
