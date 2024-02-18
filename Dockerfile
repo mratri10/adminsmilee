@@ -14,4 +14,4 @@ COPY build/ ./build
 EXPOSE 3000
 
 # Command to run the React application
-CMD ["serve", "-s", "build", -l, "5000"]
+CMD ["serve", "-s", "build", "-l", "5000"]
