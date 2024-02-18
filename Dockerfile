@@ -11,7 +11,7 @@ WORKDIR /app
 COPY build/ ./build
 
 # Expose the port serve runs on
-EXPOSE 5000
+EXPOSE 3000
 
 # Command to run the React application
 CMD ["serve", "-s", "build"]
