@@ -17,4 +17,4 @@ COPY build/ ./build/
 EXPOSE 3030
 
 # Command to run the React application
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build"]
