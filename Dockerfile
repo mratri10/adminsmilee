@@ -8,7 +8,7 @@ RUN npm install -g serve
 WORKDIR /app
 
 # Copy the build directory from the previous stage
-COPY /app/build ./build
+COPY build/ ./build
 
 # Expose the port serve runs on
 EXPOSE 5000
