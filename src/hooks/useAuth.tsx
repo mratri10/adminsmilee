@@ -18,7 +18,7 @@ export const AuthProvider = (data:AuthInterface) =>{
 
     const login = (data:any) =>{
         setUser({keyName: "user", defaultValue:data});
-        navigate("/")
+        navigate("/admin")
     }
 
     const logout = () =>{
