@@ -1,21 +1,33 @@
 // LoginPage.tsx
 
 import React, { useState } from 'react';
+import ApiService from '../apiService';
 import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-//   const [user, setUser] = useLocalStorage({keyName: "user", defaultValue:null});
 
-const {login} = useAuth();
+  const {login} = useAuth()
 
 
   const handleLoginPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle LoginPage logic here
-    console.log('Logging in with:', { email, password });
+    
+    console.log('Logging in with:', { username, password });
+    postLogin(username, password)
   };
+
+
+  const postLogin = async(username:string, password:string) =>{
+    try {
+      const result = await ApiService.postData({url:"/api/login", params:{username,password}})
+      login(result.data)
+    } catch (error) {
+      console.info("postLoginError", error)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -28,18 +40,17 @@ const {login} = useAuth();
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">
-                Email address
+                Username
               </label>
               <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="user-name"
+                name="username"
+                type="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>
@@ -84,10 +95,6 @@ const {login} = useAuth();
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={()=>{
-                // setUser({keyName: "user", defaultValue:null});
-                login("Gururu")
-              }}
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 {/* Heroicon name: lock-closed */}
