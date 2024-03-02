@@ -1,16 +1,10 @@
 
-import {action, computed, get, makeAutoObservable, observable} from 'mobx'
+import {action, computed, observable} from 'mobx'
 import ApiService from '../apiService';
-import { RootStore } from './store';
 
 class LoginStore{
-    rootStore:RootStore
-    constructor(rootStore: RootStore){
-        makeAutoObservable(this, {rootStore: false});
-        this.rootStore = rootStore
-    }
     
-    @observable myToken:LogResModel={token:'rweeewg'};
+    @observable myToken:LogResModel={token:''};
 
     
     @action

@@ -1,4 +1,5 @@
 import axios, {AxiosResponse, AxiosError} from 'axios'
+import { useAuth } from '../hooks/useAuth';
 
 interface ApiResponse{
     data:any
@@ -8,7 +9,8 @@ interface ApiError{
 }
 interface ApiParameter{
     url:string,
-    params:any,
+    params?:any,
+    token?:string,
 }
 
 const BASE_URL = "http://188.166.253.125:2808";
@@ -16,18 +18,31 @@ const BASE_URL = "http://188.166.253.125:2808";
 
 
 class ApiService{
-    static async getData({url, params}:ApiParameter): Promise<ApiResponse>{
+    static async getData({url, token}:ApiParameter): Promise<ApiResponse>{
         try {
-            const response: AxiosResponse<ApiResponse>= await axios.get(BASE_URL+url, ...params);
+            const response: AxiosResponse<ApiResponse>= await axios.get(BASE_URL+url, {
+                headers:{
+                    "X-API-TOKEN":token
+                }
+            });
             return response.data
         } catch (error) {
-            throw ApiService.handleError(error as AxiosError<ApiError>)
+            const errorCode = error as AxiosError<ApiError>
+            if(errorCode.response?.status === 401){
+                window.location.href = "/login";
+            }
+            throw ApiService.handleError(errorCode)
         }
     }
 
-    static async postData({url, params}:ApiParameter): Promise<ApiResponse>{
+    static async postData({url, params, token}:ApiParameter): Promise<ApiResponse>{
+        
         try {
-            const response: AxiosResponse<ApiResponse>= await axios.post(BASE_URL+url, {...params});
+            const response: AxiosResponse<ApiResponse>= await axios.post(BASE_URL+url, {...params},{
+                headers:{
+                    "X-API-TOKEN":token
+                }
+            });
             return response.data
         } catch (error) {
             throw ApiService.handleError(error as AxiosError<ApiError>)

@@ -1,6 +1,6 @@
 // LoginPage.tsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApiService from '../apiService';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -8,9 +8,15 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const {login} = useAuth()
+  const {login, logout} = useAuth()
 
 
+  useEffect(()=>{
+    check()
+  },[])
+  const check = async()=>{
+    await logout()
+  }
   const handleLoginPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle LoginPage logic here

@@ -1,13 +1,13 @@
+import React from "react";
 import LoginStore from "./LoginStore";
-import UserStore from "./UserStore";
+import { UserStore } from "./UserStore";
 
-export class RootStore{
-    userStore: UserStore;
-    loginStore:LoginStore
-    constructor(){
-        this.userStore = new UserStore(this);
-        this.loginStore = new LoginStore(this);
-    }
-}
 
-export const store = new RootStore()
+
+export const stores = Object.freeze({
+    loginStore : new LoginStore(),  
+    userStore: new UserStore()
+})
+
+export const storeContext = React.createContext(stores)
+export const StoreProvider = storeContext.Provider;
